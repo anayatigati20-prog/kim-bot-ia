@@ -6,27 +6,37 @@
 <title>KIM BOT IA | Sports Analytics</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
- background:#08090d;
- color:white;
- font-family:Arial,sans-serif;
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
 }
 
 :root{
  --red:#ff1744;
- --dark:#11131b;
- --muted:#9295a3;
+ --background:#08090d;
+ --panel:#151721;
+ --border:#303442;
+ --text:#ffffff;
+ --muted:#a4a7b5;
+}
+
+body{
+ background:var(--background);
+ color:var(--text);
+ font-family:Arial,sans-serif;
 }
 
 .sidebar{
  position:fixed;
- width:245px;
+ left:0;
+ top:0;
+ width:235px;
  height:100vh;
  background:#0d0f16;
- border-right:1px solid #292b36;
+ border-right:1px solid var(--border);
  padding:25px 15px;
+ z-index:10;
 }
 
 .logo{
@@ -52,15 +62,17 @@ body{
  font-size:15px;
 }
 
-.menu button:hover,.menu button.active{
+.menu button:hover,
+.menu button.active{
  background:#29121a;
  color:var(--red);
  box-shadow:0 0 15px #ff174433;
 }
 
 main{
- margin-left:245px;
+ margin-left:235px;
  padding:30px;
+ min-height:100vh;
 }
 
 .topbar{
@@ -75,11 +87,23 @@ main{
  font-size:25px;
 }
 
-.status{color:#43d99b;font-size:13px}
+.status{
+ color:#43d99b;
+ font-size:13px;
+}
 
-.welcome{margin-bottom:30px}
-.welcome h2{font-size:29px;margin-bottom:10px}
-.welcome p{color:var(--muted)}
+.welcome{
+ margin-bottom:30px;
+}
+
+.welcome h2{
+ font-size:29px;
+ margin-bottom:10px;
+}
+
+.welcome p{
+ color:var(--muted);
+}
 
 .cards{
  display:grid;
@@ -89,7 +113,7 @@ main{
 
 .card{
  background:linear-gradient(145deg,#191c27,#101119);
- border:1px solid #292d3b;
+ border:1px solid var(--border);
  border-radius:14px;
  padding:23px;
  transition:.3s;
@@ -101,11 +125,30 @@ main{
  box-shadow:0 0 20px #ff174422;
 }
 
-.card h3{color:var(--red);margin-bottom:15px}
-.card p{color:#aaa;line-height:1.7}
+.card h3{
+ color:var(--red);
+ margin-bottom:15px;
+}
 
-.section{display:none}
-.section.active{display:block}
+.card p{
+ color:var(--muted);
+ line-height:1.7;
+}
+
+.stat-number{
+ font-size:28px;
+ color:white;
+ font-weight:bold;
+ margin-top:12px;
+}
+
+.section{
+ display:none;
+}
+
+.section.active{
+ display:block;
+}
 
 .action{
  margin-top:18px;
@@ -118,23 +161,18 @@ main{
  cursor:pointer;
 }
 
-.action:hover{box-shadow:0 0 18px var(--red)}
+.action:hover{
+ box-shadow:0 0 18px var(--red);
+}
 
-select,input{
+input,select{
  width:100%;
- padding:13px;
+ padding:14px;
  margin-top:12px;
  background:#20232e;
  color:white;
  border:1px solid #393d4b;
  border-radius:7px;
-}
-
-.stat-number{
- font-size:28px;
- color:white;
- font-weight:bold;
- margin-top:12px;
 }
 
 .sports{
@@ -145,10 +183,10 @@ select,input{
 }
 
 .sport{
- padding:20px;
+ padding:22px;
  text-align:center;
- background:#171923;
- border:1px solid #303442;
+ background:var(--panel);
+ border:1px solid var(--border);
  border-radius:12px;
  cursor:pointer;
 }
@@ -160,11 +198,22 @@ select,input{
 
 .result{
  margin-top:20px;
- padding:18px;
+ padding:20px;
  background:#171923;
  border-radius:10px;
  color:#ccc;
- line-height:1.8;
+ line-height:1.9;
+}
+
+.result h3{
+ color:var(--red);
+ margin-bottom:10px;
+}
+
+hr{
+ border:0;
+ border-top:1px solid var(--border);
+ margin:20px 0;
 }
 
 footer{
@@ -174,16 +223,35 @@ footer{
 }
 
 @media(max-width:900px){
+
  .sidebar{
   width:100%;
   height:auto;
   position:relative;
  }
- .logo{margin-bottom:15px}
- .menu{display:flex;overflow-x:auto}
- .menu button{min-width:115px;text-align:center}
- main{margin-left:0;padding:20px}
- .cards,.sports{grid-template-columns:1fr}
+
+ .logo{
+  margin-bottom:15px;
+ }
+
+ .menu{
+  display:flex;
+  overflow-x:auto;
+ }
+
+ .menu button{
+  min-width:115px;
+  text-align:center;
+ }
+
+ main{
+  margin-left:0;
+  padding:20px;
+ }
+
+ .cards,.sports{
+  grid-template-columns:1fr;
+ }
 }
 </style>
 </head>
@@ -191,7 +259,8 @@ footer{
 <body>
 
 <aside class="sidebar">
- <div class="logo">KIM BOT IA</div>
+
+ <div class="logo">KIM BOT IA 👑</div>
 
  <div class="menu">
   <button class="active" onclick="showPage('home',this)">🏠 Accueil</button>
@@ -201,6 +270,7 @@ footer{
   <button onclick="showPage('history',this)">📜 Historique</button>
   <button onclick="showPage('settings',this)">⚙️ Paramètres</button>
  </div>
+
 </aside>
 
 <main>
@@ -210,6 +280,8 @@ footer{
  <span class="status">● SYSTÈME ACTIF</span>
 </div>
 
+<!-- ACCUEIL -->
+
 <section id="home" class="section active">
 
  <div class="welcome">
@@ -218,6 +290,7 @@ footer{
  </div>
 
  <div class="cards">
+
   <div class="card">
    <h3>🏆 Sports disponibles</h3>
    <p>Explorez plusieurs disciplines sportives.</p>
@@ -227,7 +300,7 @@ footer{
   <div class="card">
    <h3>📊 Analyse statistique</h3>
    <p>Étudiez les résultats et les performances.</p>
-   <div class="stat-number">IA</div>
+   <div class="stat-number" id="totalResults">0</div>
   </div>
 
   <div class="card">
@@ -235,105 +308,168 @@ footer{
    <p>Posez des questions sur les statistiques sportives.</p>
    <button class="action" onclick="showPage('assistant')">Ouvrir</button>
   </div>
+
  </div>
 
  <br><br>
+
  <h2>Disciplines disponibles</h2>
 
  <div class="sports">
-  <div class="sport" onclick="chooseSport('Football')">⚽ Football</div>
-  <div class="sport" onclick="chooseSport('Basketball')">🏀 Basketball</div>
-  <div class="sport" onclick="chooseSport('Tennis')">🎾 Tennis</div>
-  <div class="sport" onclick="chooseSport('Volleyball')">🏐 Volleyball</div>
-  <div class="sport" onclick="chooseSport('Hockey')">🏒 Hockey</div>
-  <div class="sport" onclick="chooseSport('Baseball')">⚾ Baseball</div>
+  <div class="sport" onclick="chooseSport('football')">⚽ Football</div>
+  <div class="sport" onclick="chooseSport('basketball')">🏀 Basketball</div>
+  <div class="sport" onclick="chooseSport('tennis')">🎾 Tennis</div>
+  <div class="sport" onclick="chooseSport('volleyball')">🏐 Volleyball</div>
+  <div class="sport" onclick="chooseSport('hockey')">🏒 Hockey</div>
+  <div class="sport" onclick="chooseSport('baseball')">⚾ Baseball</div>
  </div>
 
 </section>
 
+<!-- SPORTS -->
+
 <section id="sports" class="section">
+
  <h2>🏆 Centre sportif</h2>
- <p style="color:#999;margin-top:10px">Sélectionnez une discipline.</p>
+
+ <p style="color:#999;margin-top:10px">
+ Sélectionnez une discipline.
+ </p>
 
  <div class="sports">
-  <div class="sport" onclick="chooseSport('Football')">⚽ Football</div>
-  <div class="sport" onclick="chooseSport('Basketball')">🏀 Basketball</div>
-  <div class="sport" onclick="chooseSport('Tennis')">🎾 Tennis</div>
-  <div class="sport" onclick="chooseSport('Volleyball')">🏐 Volleyball</div>
-  <div class="sport" onclick="chooseSport('Hockey')">🏒 Hockey</div>
-  <div class="sport" onclick="chooseSport('Baseball')">⚾ Baseball</div>
+  <div class="sport" onclick="chooseSport('football')">⚽ Football</div>
+  <div class="sport" onclick="chooseSport('basketball')">🏀 Basketball</div>
+  <div class="sport" onclick="chooseSport('tennis')">🎾 Tennis</div>
+  <div class="sport" onclick="chooseSport('volleyball')">🏐 Volleyball</div>
+  <div class="sport" onclick="chooseSport('hockey')">🏒 Hockey</div>
+  <div class="sport" onclick="chooseSport('baseball')">⚾ Baseball</div>
  </div>
 
  <div id="sportResult" class="result">
   En attente de sélection.
  </div>
+
 </section>
 
+<!-- STATISTIQUES -->
+
 <section id="stats" class="section">
- <h2>📊 Centre statistique</h2><br>
+
+ <h2>📊 Centre statistique</h2>
+
+ <br>
 
  <div class="cards">
+
   <div class="card">
    <h3>Résultats étudiés</h3>
-   <div class="stat-number">0</div>
-   <p>Données de démonstration.</p>
+   <div class="stat-number" id="resultCount">0</div>
+   <p>Résultats présents dans les données.</p>
   </div>
 
   <div class="card">
    <h3>Équipes comparées</h3>
-   <div class="stat-number">0</div>
-   <p>En attente de données.</p>
+   <div class="stat-number" id="comparisonCount">0</div>
+   <p>Comparaisons effectuées.</p>
   </div>
 
   <div class="card">
    <h3>Analyses réalisées</h3>
-   <div class="stat-number">0</div>
-   <p>Votre historique apparaîtra ici.</p>
+   <div class="stat-number" id="analysisCount">0</div>
+   <p>Consultations effectuées.</p>
   </div>
+
  </div>
 
  <div class="card" style="margin-top:20px">
+
   <h3>Comparer deux équipes</h3>
+
   <input id="team1" placeholder="Nom de la première équipe">
+
   <input id="team2" placeholder="Nom de la deuxième équipe">
-  <button class="action" onclick="compareTeams()">Comparer</button>
-  <div id="comparison" class="result"></div>
+
+  <button class="action" onclick="compareTeams()">
+   Comparer
+  </button>
+
+  <div id="comparison" class="result">
+   Entrez deux équipes pour consulter leurs statistiques.
+  </div>
+
  </div>
+
 </section>
+
+<!-- ASSISTANT -->
 
 <section id="assistant" class="section">
- <h2>🤖 Assistant KIM IA</h2><br>
+
+ <h2>🤖 Assistant KIM IA</h2>
+
+ <br>
 
  <div class="card">
-  <p>Bonjour ! Je suis KIM IA, votre assistant d'analyse sportive éducative.</p>
 
-  <input id="question" placeholder="Posez une question sur les statistiques sportives...">
+  <p>
+   Bonjour ! Je suis KIM IA, votre assistant d'analyse sportive éducative.
+  </p>
 
-  <button class="action" onclick="sendMessage()">Envoyer</button>
+  <input
+   id="question"
+   placeholder="Posez une question sur les statistiques sportives..."
+  >
+
+  <button class="action" onclick="sendMessage()">
+   Envoyer
+  </button>
 
   <div id="response" class="result">
-   Votre assistant est actuellement en mode démonstration.
+   Assistant en attente de votre message.
   </div>
+
  </div>
+
 </section>
+
+<!-- HISTORIQUE -->
 
 <section id="history" class="section">
- <h2>📜 Historique</h2><br>
+
+ <h2>📜 Historique</h2>
+
+ <br>
+
  <div class="card">
-  <div id="historyContent">Aucune analyse enregistrée.</div>
+  <div id="historyContent">
+   Aucune analyse enregistrée.
+  </div>
  </div>
+
 </section>
 
+<!-- PARAMETRES -->
+
 <section id="settings" class="section">
- <h2>⚙️ Paramètres</h2><br>
+
+ <h2>⚙️ Paramètres</h2>
+
+ <br>
+
  <div class="card">
+
   <h3>Version de l'application</h3>
-  <p>KIM BOT IA — VERSION 3.0</p>
+
+  <p>KIM BOT IA — VERSION 4.0</p>
+
   <br>
+
   <p>Interface : Futuriste</p>
   <p>Thème : Noir et rouge</p>
   <p>Mode : Analyse sportive éducative</p>
+
  </div>
+
 </section>
 
 <footer>
@@ -343,124 +479,234 @@ footer{
 </main>
 
 <script>
+
+let donnees={};
+let comparaisons=0;
+let analyses=0;
+
 function showPage(page,button){
- document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
- document.getElementById(page).classList.add('active');
 
- document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
+ document.querySelectorAll('.section')
+ .forEach(s=>s.classList.remove('active'));
 
- if(button) button.classList.add('active');
+ document.getElementById(page)
+ .classList.add('active');
+
+ document.querySelectorAll('.menu button')
+ .forEach(b=>b.classList.remove('active'));
+
+ if(button){
+  button.classList.add('active');
+ }
 }
 
-function chooseSport(sport){
+async function chargerDonnees(){
+
+ try{
+
+  const response=await fetch('./donnees.json');
+
+  if(!response.ok){
+   throw new Error('Fichier introuvable');
+  }
+
+  donnees=await response.json();
+
+  let total=0;
+
+  Object.values(donnees).forEach(sport=>{
+   if(Array.isArray(sport)){
+    total+=sport.length;
+   }
+  });
+
+  document.getElementById('totalResults').textContent=total;
+  document.getElementById('resultCount').textContent=total;
+
+  return true;
+
+ }catch(error){
+
+  console.error(error);
+
+  document.getElementById('sportResult').textContent=
+  'Impossible de charger les données sportives.';
+
+  return false;
+ }
+}
+
+async function chooseSport(sport){
+
  showPage('sports');
- document.getElementById('sportResult').innerHTML=
- '<h3>'+sport+'</h3><br>'+
- 'Discipline sélectionnée.<br>'+
- 'Les statistiques et les résultats historiques apparaîtront ici lorsque les données seront connectées.';
-}
 
-async function compareTeams(){   let a=document.getElementById('team1').value.trim();  let b=document.getElementById('team2').value.trim();   if(!a || !b){   alert('Entrez les deux noms des équipes.');   return;  }   const zone=document.getElementById('comparison');  zone.innerHTML="Chargement des statistiques...";   try{   const response=await fetch('./donnees.json');    if(!response.ok) throw new Error("Fichier introuvable");    const data=await response.json();   const matchs=data.football || [];    function analyser(equipe){     let joues=0, victoires=0, nuls=0, defaites=0;    let butsMarques=0, butsEncaisses=0;     matchs.forEach(m=>{     if(m.equipe1===equipe || m.equipe2===equipe){       joues++;       let marque=m.equipe1===equipe ? m.score1 : m.score2;      let encaisse=m.equipe1===equipe ? m.score2 : m.score1;       butsMarques+=marque;      butsEncaisses+=encaisse;       if(marque>encaisse) victoires++;      else if(marque===encaisse) nuls++;      else defaites++;     }    });     return {joues,victoires,nuls,defaites,butsMarques,butsEncaisses};   }    const x=analyser(a);   const y=analyser(b);    function afficher(nom,s){    return `<h3>${nom}</h3>    Matchs joués : ${s.joues}<br>    Victoires : ${s.victoires}<br>    Matchs nuls : ${s.nuls}<br>    Défaites : ${s.defaites}<br>    Buts marqués : ${s.butsMarques}<br>    Buts encaissés : ${s.butsEncaisses}`;   }    zone.innerHTML=`    ${afficher(a,x)}    <hr style="margin:15px 0;border-color:#393d4b">    ${afficher(b,y)}   `;   }catch(error){   zone.innerHTML="Impossible de charger les données.";  } }{
- let a=document.getElementById('team1').value.trim();
- let b=document.getElementById('team2').value.trim();
+ const zone=document.getElementById('sportResult');
 
- if(!a || !b){
-  alert('Entrez les deux noms des équipes.');
+ if(Object.keys(donnees).length===0){
+  await chargerDonnees();
+ }
+
+ const matchs=donnees[sport] || [];
+
+ let titre=sport.charAt(0).toUpperCase()+sport.slice(1);
+
+ if(matchs.length===0){
+
+  zone.innerHTML=
+  '<h3>'+titre+'</h3>'+
+  'Aucune donnée disponible pour cette discipline.';
+
   return;
  }
 
- document.getElementById('comparison').innerHTML=
- '<h3>Comparaison demandée</h3>'+
- a+' VS '+b+
- '<br><br>Les données réelles ne sont pas encore connectées. Aucune conclusion ne peut être tirée pour le moment.';
+ let html='<h3>'+titre+'</h3>';
+
+ matchs.forEach(m=>{
+
+  if(m.equipe1 && m.equipe2){
+
+   html+=
+   m.equipe1+' '+m.score1+
+   ' - '+m.score2+' '+m.equipe2+
+   '<br>Date : '+(m.date || 'Non précisée')+
+   '<hr>';
+
+  }
+
+ });
+
+ zone.innerHTML=html;
+}
+
+async function compareTeams(){
+
+ const a=document.getElementById('team1').value.trim();
+ const b=document.getElementById('team2').value.trim();
+
+ const zone=document.getElementById('comparison');
+
+ if(!a || !b){
+
+  alert('Entrez les deux noms des équipes.');
+
+  return;
+ }
+
+ zone.innerHTML='Chargement des statistiques...';
+
+ if(Object.keys(donnees).length===0){
+
+  const ok=await chargerDonnees();
+
+  if(!ok){
+   zone.textContent='Impossible de charger donnees.json.';
+   return;
+  }
+
+ }
+
+ const matchs=donnees.football || [];
+
+ function analyser(equipe){
+
+  let s={
+   joues:0,
+   victoires:0,
+   nuls:0,
+   defaites:0,
+   butsMarques:0,
+   butsEncaisses:0
+  };
+
+  matchs.forEach(m=>{
+
+   if(m.equipe1===equipe || m.equipe2===equipe){
+
+    s.joues++;
+
+    const marque=m.equipe1===equipe?m.score1:m.score2;
+
+    const encaisse=m.equipe1===equipe?m.score2:m.score1;
+
+    s.butsMarques+=marque;
+    s.butsEncaisses+=encaisse;
+
+    if(marque>encaisse){
+     s.victoires++;
+    }else if(marque===encaisse){
+     s.nuls++;
+    }else{
+     s.defaites++;
+    }
+
+   }
+
+  });
+
+  return s;
+ }
+
+ function afficher(nom,s){
+
+  return `
+   <h3>${nom}</h3>
+   Matchs joués : ${s.joues}<br>
+   Victoires : ${s.victoires}<br>
+   Nuls : ${s.nuls}<br>
+   Défaites : ${s.defaites}<br>
+   Buts marqués : ${s.butsMarques}<br>
+   Buts encaissés : ${s.butsEncaisses}
+  `;
+ }
+
+ const x=analyser(a);
+ const y=analyser(b);
+
+ comparaisons++;
+ analyses++;
+
+ document.getElementById('comparisonCount').textContent=comparaisons;
+ document.getElementById('analysisCount').textContent=analyses;
+
+ zone.innerHTML=
+ afficher(a,x)+
+ '<hr>'+
+ afficher(b,y);
+
+ const historique=document.getElementById('historyContent');
+
+ historique.innerHTML=
+ '<p>'+a+' VS '+b+'</p>'+
+ historique.innerHTML;
+
 }
 
 function sendMessage(){
- let q=document.getElementById('question').value.trim();
+
+ const q=document.getElementById('question').value.trim();
 
  if(!q){
+
   alert('Écrivez une question.');
+
   return;
  }
 
- document.getElementById('response').innerHTML=
- '<strong>Votre question :</strong><br>'+q+
- '<br><br>Je suis actuellement en mode démonstration. Mon moteur IA doit encore être connecté pour analyser des données réelles.';
+ document.getElementById('response').textContent=
+ 'Votre question : '+q+
+ '. Le moteur IA n’est pas encore connecté.';
 
- document.getElementById('historyContent').innerHTML=
- q+'<br><br>'+document.getElementById('historyContent').innerHTML;
+ analyses++;
+
+ document.getElementById('analysisCount').textContent=analyses;
 
  document.getElementById('question').value='';
+
 }
-</script>async function compareTeams(){
 
- let a=document.getElementById('team1').value.trim();
- let b=document.getElementById('team2').value.trim();
+chargerDonnees();
 
- if(!a || !b){
-  alert('Entrez les deux noms des équipes.');
-  return;
- }
-
- const zone=document.getElementById('comparison');
- zone.innerHTML="Chargement des statistiques...";
-
- try{
-  const response=await fetch('./donnees.json');
-
-  if(!response.ok) throw new Error("Fichier introuvable");
-
-  const data=await response.json();
-  const matchs=data.football || [];
-
-  function analyser(equipe){
-
-   let joues=0, victoires=0, nuls=0, defaites=0;
-   let butsMarques=0, butsEncaisses=0;
-
-   matchs.forEach(m=>{
-    if(m.equipe1===equipe || m.equipe2===equipe){
-
-     joues++;
-
-     let marque=m.equipe1===equipe ? m.score1 : m.score2;
-     let encaisse=m.equipe1===equipe ? m.score2 : m.score1;
-
-     butsMarques+=marque;
-     butsEncaisses+=encaisse;
-
-     if(marque>encaisse) victoires++;
-     else if(marque===encaisse) nuls++;
-     else defaites++;
-    }
-   });
-
-   return {joues,victoires,nuls,defaites,butsMarques,butsEncaisses};
-  }
-
-  const x=analyser(a);
-  const y=analyser(b);
-
-  function afficher(nom,s){
-   return `<h3>${nom}</h3>
-   Matchs joués : ${s.joues}<br>
-   Victoires : ${s.victoires}<br>
-   Matchs nuls : ${s.nuls}<br>
-   Défaites : ${s.defaites}<br>
-   Buts marqués : ${s.butsMarques}<br>
-   Buts encaissés : ${s.butsEncaisses}`;
-  }
-
-  zone.innerHTML=`
-   ${afficher(a,x)}
-   <hr style="margin:15px 0;border-color:#393d4b">
-   ${afficher(b,y)}
-  `;
-
- }catch(error){
-  zone.innerHTML="Impossible de charger les données.";
- }
-}
+</script>
 
 </body>
 </html>
