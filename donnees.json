@@ -1,40 +1,31 @@
 {
   "football": [
-    {
-      "equipe1": "Equipe A",
-      "equipe2": "Equipe B",
-      "score1": 2,
-      "score2": 1,
-      "date": "2026-11-10"
-    },
-    {
-      "equipe1": "Equipe A",
-      "equipe2": "Equipe C",
-      "score1": 1,
-      "score2": 1,
-      "date": "2026-11-12"
-    }
-  ],
-  "basketball": [],
-  "tennis": [],
-  "volleyball": [],
-  "hockey": [],
-  "baseball": []
-}
-{
-  "football": [
-    {"equipe1": "Equipe A", "equipe2": "Equipe B", "score1": 2, "score2": 1, "date": "2026-09-05"},
-    {"equipe1": "Equipe C", "equipe2": "Equipe D", "score1": 0, "score2": 0, "date": "2026-09-05"},
-    {"equipe1": "Equipe A", "equipe2": "Equipe C", "score1": 3, "score2": 1, "date": "2026-09-12"},
-    {"equipe1": "Equipe B", "equipe2": "Equipe D", "score1": 1, "score2": 2, "date": "2026-09-12"},
-    {"equipe1": "Equipe A", "equipe2": "Equipe D", "score1": 1, "score2": 1, "date": "2026-09-19"},
-    {"equipe1": "Equipe B", "equipe2": "Equipe C", "score1": 2, "score2": 0, "date": "2026-09-19"},
-    {"equipe1": "Equipe B", "equipe2": "Equipe A", "score1": 0, "score2": 2, "date": "2026-10-03"},
-    {"equipe1": "Equipe D", "equipe2": "Equipe C", "score1": 3, "score2": 1, "date": "2026-10-03"},
-    {"equipe1": "Equipe C", "equipe2": "Equipe A", "score1": 1, "score2": 1, "date": "2026-10-10"},
-    {"equipe1": "Equipe D", "equipe2": "Equipe B", "score1": 0, "score2": 1, "date": "2026-10-10"},
-    {"equipe1": "Equipe D", "equipe2": "Equipe A", "score1": 2, "score2": 2, "date": "2026-10-17"},
-    {"equipe1": "Equipe C", "equipe2": "Equipe B", "score1": 1, "score2": 1, "date": "2026-10-17"}
+    {"equipe1": "Real Madrid", "equipe2": "Malaga", "score1": 4, "score2": 0, "date": "2026-08-30"},
+    {"equipe1": "Betis", "equipe2": "Real Madrid", "score1": 1, "score2": 0, "date": "2026-09-04"},
+    {"equipe1": "Real Madrid", "equipe2": "Rayo Vallecano", "score1": 4, "score2": 1, "date": "2026-09-12"},
+    {"equipe1": "Elche", "equipe2": "Real Madrid", "score1": 2, "score2": 3, "date": "2026-09-15"},
+    {"equipe1": "Atletico Madrid", "equipe2": "Real Madrid", "score1": 2, "score2": 1, "date": "2026-09-20"},
+    {"equipe1": "Malaga", "equipe2": "Espanyol", "score1": 1, "score2": 1, "date": "2026-10-09"},
+    {"equipe1": "Real Madrid", "equipe2": "Villarreal", "score1": 1, "score2": 0, "date": "2026-10-10"},
+    {"equipe1": "FC Barcelone", "equipe2": "Getafe", "score1": 3, "score2": 0, "date": "2026-10-10"},
+    {"equipe1": "Espanyol", "equipe2": "Atletico Madrid", "score1": 0, "score2": 1, "date": "2026-10-17"},
+    {"equipe1": "Betis", "equipe2": "FC Barcelone", "score1": 2, "score2": 5, "date": "2026-10-17"},
+    {"equipe1": "Real Madrid", "equipe2": "Sevilla", "score1": 4, "score2": 1, "date": "2026-10-18"},
+    {"equipe1": "Racing Santander", "equipe2": "Espanyol", "score1": 2, "score2": 1, "date": "2026-10-24"},
+    {"equipe1": "FC Barcelone", "equipe2": "Real Madrid", "score1": 1, "score2": 2, "date": "2026-10-25"},
+    {"equipe1": "Villarreal", "equipe2": "Espanyol", "score1": 0, "score2": 1, "date": "2026-10-30"},
+    {"equipe1": "FC Barcelone", "equipe2": "Alaves", "score1": 6, "score2": 1, "date": "2026-10-31"},
+    {"equipe1": "Racing Santander", "equipe2": "Real Madrid", "score1": 0, "score2": 3, "date": "2026-11-01"},
+    {"equipe1": "Sevilla", "equipe2": "Alaves", "score1": 0, "score2": 0, "date": "2026-11-06"},
+    {"equipe1": "Malaga", "equipe2": "Racing Santander", "score1": 1, "score2": 2, "date": "2026-11-07"},
+    {"equipe1": "Espanyol", "equipe2": "Deportivo La Coruna", "score1": 0, "score2": 0, "date": "2026-11-07"},
+    {"equipe1": "Osasuna", "equipe2": "Athletic Bilbao", "score1": 1, "score2": 1, "date": "2026-11-07"},
+    {"equipe1": "Valencia", "equipe2": "Real Madrid", "score1": 0, "score2": 3, "date": "2026-11-07"},
+    {"equipe1": "Elche", "equipe2": "Betis", "score1": 0, "score2": 2, "date": "2026-11-08"},
+    {"equipe1": "Sociedad", "equipe2": "Rayo Vallecano", "score1": 1, "score2": 0, "date": "2026-11-08"},
+    {"equipe1": "Celta Vigo", "equipe2": "Levante", "score1": 0, "score2": 0, "date": "2026-11-08"},
+    {"equipe1": "Villarreal", "equipe2": "Getafe", "score1": 2, "score2": 0, "date": "2026-11-08"},
+    {"equipe1": "Atletico Madrid", "equipe2": "FC Barcelone", "score1": 1, "score2": 2, "date": "2026-11-08"}
   ],
   "basketball": [],
   "tennis": [],
