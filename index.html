@@ -89,5 +89,310 @@ main{
 
 .card{
  background:linear-gradient(145deg,#191c27,#101119);
- border:1px solid #292d3b
+ border:1px solid #292d3b;
+ border-radius:14px;
+ padding:23px;
+ transition:.3s;
+}
 
+.card:hover{
+ transform:translateY(-4px);
+ border-color:var(--red);
+ box-shadow:0 0 20px #ff174422;
+}
+
+.card h3{color:var(--red);margin-bottom:15px}
+.card p{color:#aaa;line-height:1.7}
+
+.section{display:none}
+.section.active{display:block}
+
+.action{
+ margin-top:18px;
+ padding:13px 19px;
+ border:none;
+ border-radius:7px;
+ background:var(--red);
+ color:white;
+ font-weight:bold;
+ cursor:pointer;
+}
+
+.action:hover{box-shadow:0 0 18px var(--red)}
+
+select,input{
+ width:100%;
+ padding:13px;
+ margin-top:12px;
+ background:#20232e;
+ color:white;
+ border:1px solid #393d4b;
+ border-radius:7px;
+}
+
+.stat-number{
+ font-size:28px;
+ color:white;
+ font-weight:bold;
+ margin-top:12px;
+}
+
+.sports{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:15px;
+ margin-top:20px;
+}
+
+.sport{
+ padding:20px;
+ text-align:center;
+ background:#171923;
+ border:1px solid #303442;
+ border-radius:12px;
+ cursor:pointer;
+}
+
+.sport:hover{
+ border-color:var(--red);
+ color:var(--red);
+}
+
+.result{
+ margin-top:20px;
+ padding:18px;
+ background:#171923;
+ border-radius:10px;
+ color:#ccc;
+ line-height:1.8;
+}
+
+footer{
+ margin-top:50px;
+ color:#555;
+ text-align:center;
+}
+
+@media(max-width:900px){
+ .sidebar{
+  width:100%;
+  height:auto;
+  position:relative;
+ }
+ .logo{margin-bottom:15px}
+ .menu{display:flex;overflow-x:auto}
+ .menu button{min-width:115px;text-align:center}
+ main{margin-left:0;padding:20px}
+ .cards,.sports{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<aside class="sidebar">
+ <div class="logo">KIM BOT IA</div>
+
+ <div class="menu">
+  <button class="active" onclick="showPage('home',this)">🏠 Accueil</button>
+  <button onclick="showPage('sports',this)">🏆 Sports</button>
+  <button onclick="showPage('stats',this)">📊 Statistiques</button>
+  <button onclick="showPage('assistant',this)">🤖 Assistant IA</button>
+  <button onclick="showPage('history',this)">📜 Historique</button>
+  <button onclick="showPage('settings',this)">⚙️ Paramètres</button>
+ </div>
+</aside>
+
+<main>
+
+<div class="topbar">
+ <h1>KIM BOT IA</h1>
+ <span class="status">● SYSTÈME ACTIF</span>
+</div>
+
+<section id="home" class="section active">
+
+ <div class="welcome">
+  <h2>Bienvenue dans KIM BOT IA</h2>
+  <p>Votre centre intelligent d'analyse et de statistiques sportives.</p>
+ </div>
+
+ <div class="cards">
+  <div class="card">
+   <h3>🏆 Sports disponibles</h3>
+   <p>Explorez plusieurs disciplines sportives.</p>
+   <div class="stat-number">06</div>
+  </div>
+
+  <div class="card">
+   <h3>📊 Analyse statistique</h3>
+   <p>Étudiez les résultats et les performances.</p>
+   <div class="stat-number">IA</div>
+  </div>
+
+  <div class="card">
+   <h3>🤖 Assistant intelligent</h3>
+   <p>Posez des questions sur les statistiques sportives.</p>
+   <button class="action" onclick="showPage('assistant')">Ouvrir</button>
+  </div>
+ </div>
+
+ <br><br>
+ <h2>Disciplines disponibles</h2>
+
+ <div class="sports">
+  <div class="sport" onclick="chooseSport('Football')">⚽ Football</div>
+  <div class="sport" onclick="chooseSport('Basketball')">🏀 Basketball</div>
+  <div class="sport" onclick="chooseSport('Tennis')">🎾 Tennis</div>
+  <div class="sport" onclick="chooseSport('Volleyball')">🏐 Volleyball</div>
+  <div class="sport" onclick="chooseSport('Hockey')">🏒 Hockey</div>
+  <div class="sport" onclick="chooseSport('Baseball')">⚾ Baseball</div>
+ </div>
+
+</section>
+
+<section id="sports" class="section">
+ <h2>🏆 Centre sportif</h2>
+ <p style="color:#999;margin-top:10px">Sélectionnez une discipline.</p>
+
+ <div class="sports">
+  <div class="sport" onclick="chooseSport('Football')">⚽ Football</div>
+  <div class="sport" onclick="chooseSport('Basketball')">🏀 Basketball</div>
+  <div class="sport" onclick="chooseSport('Tennis')">🎾 Tennis</div>
+  <div class="sport" onclick="chooseSport('Volleyball')">🏐 Volleyball</div>
+  <div class="sport" onclick="chooseSport('Hockey')">🏒 Hockey</div>
+  <div class="sport" onclick="chooseSport('Baseball')">⚾ Baseball</div>
+ </div>
+
+ <div id="sportResult" class="result">
+  En attente de sélection.
+ </div>
+</section>
+
+<section id="stats" class="section">
+ <h2>📊 Centre statistique</h2><br>
+
+ <div class="cards">
+  <div class="card">
+   <h3>Résultats étudiés</h3>
+   <div class="stat-number">0</div>
+   <p>Données de démonstration.</p>
+  </div>
+
+  <div class="card">
+   <h3>Équipes comparées</h3>
+   <div class="stat-number">0</div>
+   <p>En attente de données.</p>
+  </div>
+
+  <div class="card">
+   <h3>Analyses réalisées</h3>
+   <div class="stat-number">0</div>
+   <p>Votre historique apparaîtra ici.</p>
+  </div>
+ </div>
+
+ <div class="card" style="margin-top:20px">
+  <h3>Comparer deux équipes</h3>
+  <input id="team1" placeholder="Nom de la première équipe">
+  <input id="team2" placeholder="Nom de la deuxième équipe">
+  <button class="action" onclick="compareTeams()">Comparer</button>
+  <div id="comparison" class="result"></div>
+ </div>
+</section>
+
+<section id="assistant" class="section">
+ <h2>🤖 Assistant KIM IA</h2><br>
+
+ <div class="card">
+  <p>Bonjour ! Je suis KIM IA, votre assistant d'analyse sportive éducative.</p>
+
+  <input id="question" placeholder="Posez une question sur les statistiques sportives...">
+
+  <button class="action" onclick="sendMessage()">Envoyer</button>
+
+  <div id="response" class="result">
+   Votre assistant est actuellement en mode démonstration.
+  </div>
+ </div>
+</section>
+
+<section id="history" class="section">
+ <h2>📜 Historique</h2><br>
+ <div class="card">
+  <div id="historyContent">Aucune analyse enregistrée.</div>
+ </div>
+</section>
+
+<section id="settings" class="section">
+ <h2>⚙️ Paramètres</h2><br>
+ <div class="card">
+  <h3>Version de l'application</h3>
+  <p>KIM BOT IA — VERSION 3.0</p>
+  <br>
+  <p>Interface : Futuriste</p>
+  <p>Thème : Noir et rouge</p>
+  <p>Mode : Analyse sportive éducative</p>
+ </div>
+</section>
+
+<footer>
+ KIM BOT IA © 2026 — TECHNOLOGIE & INTELLIGENCE
+</footer>
+
+</main>
+
+<script>
+function showPage(page,button){
+ document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+ document.getElementById(page).classList.add('active');
+
+ document.querySelectorAll('.menu button').forEach(b=>b.classList.remove('active'));
+
+ if(button) button.classList.add('active');
+}
+
+function chooseSport(sport){
+ showPage('sports');
+ document.getElementById('sportResult').innerHTML=
+ '<h3>'+sport+'</h3><br>'+
+ 'Discipline sélectionnée.<br>'+
+ 'Les statistiques et les résultats historiques apparaîtront ici lorsque les données seront connectées.';
+}
+
+function compareTeams(){
+ let a=document.getElementById('team1').value.trim();
+ let b=document.getElementById('team2').value.trim();
+
+ if(!a || !b){
+  alert('Entrez les deux noms des équipes.');
+  return;
+ }
+
+ document.getElementById('comparison').innerHTML=
+ '<h3>Comparaison demandée</h3>'+
+ a+' VS '+b+
+ '<br><br>Les données réelles ne sont pas encore connectées. Aucune conclusion ne peut être tirée pour le moment.';
+}
+
+function sendMessage(){
+ let q=document.getElementById('question').value.trim();
+
+ if(!q){
+  alert('Écrivez une question.');
+  return;
+ }
+
+ document.getElementById('response').innerHTML=
+ '<strong>Votre question :</strong><br>'+q+
+ '<br><br>Je suis actuellement en mode démonstration. Mon moteur IA doit encore être connecté pour analyser des données réelles.';
+
+ document.getElementById('historyContent').innerHTML=
+ q+'<br><br>'+document.getElementById('historyContent').innerHTML;
+
+ document.getElementById('question').value='';
+}
+</script>
+
+</body>
+</html>
