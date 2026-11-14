@@ -396,6 +396,16 @@ footer{
   </div>
  </div>
 
+ <h2 class="block">Prochains <span class="red">matchs.</span></h2>
+ <p class="sub">
+  Pour chaque match à venir, le site indique le résultat le plus probable d'après le modèle.
+  C'est une estimation : même le favori peut perdre.
+ </p>
+
+ <div class="card">
+  <div id="upcoming">Chargement des prochains matchs...</div>
+ </div>
+
 </section>
 
 <!-- ASSISTANT -->
@@ -436,7 +446,7 @@ footer{
  <br>
  <div class="card">
   <h3>Version de l'application</h3>
-  <p>KIM BOT IA — VERSION 5.2</p>
+  <p>KIM BOT IA — VERSION 5.3</p>
   <br>
   <p>Interface : Éditoriale</p>
   <p>Thème : Noir et rouge</p>
@@ -568,14 +578,16 @@ async function chargerDonnees(){
 
   let total=0;
 
-  Object.values(donnees).forEach(sport=>{
-   if(Array.isArray(sport)){
-    total+=sport.length;
+  Object.keys(donnees).forEach(cle=>{
+   if(cle!=='a_venir' && Array.isArray(donnees[cle])){
+    total+=donnees[cle].length;
    }
   });
 
   document.getElementById('totalResults').textContent=total;
   document.getElementById('resultCount').textContent=total;
+
+  afficherProchains();
 
   return true;
 
@@ -840,6 +852,62 @@ function rendrePronostic(nomDom,nomExt,r,cotes){
  return html;
 }
 
+// Affiche le résultat le plus probable de chaque match à venir
+function afficherProchains(){
+
+ const zone=document.getElementById('upcoming');
+
+ if(!zone){return;}
+
+ const aVenir=donnees.a_venir||[];
+ const matchs=donnees.football||[];
+
+ if(aVenir.length===0){
+  zone.textContent='Aucun match à venir dans les données.';
+  return;
+ }
+
+ let lignes='';
+
+ aVenir.forEach(m=>{
+
+  const r=calculerPronostic(matchs,m.equipe1,m.equipe2);
+
+  if(r.erreur){
+   lignes+='<tr><td style="text-align:left">'+esc(m.date||'')+'</td>'+
+    '<td style="text-align:left">'+esc(m.equipe1)+' vs '+esc(m.equipe2)+'</td>'+
+    '<td colspan="3">Données insuffisantes</td></tr>';
+   return;
+  }
+
+  const options=[
+   {nom:'Victoire '+m.equipe1,p:r.p1},
+   {nom:'Match nul',p:r.pN},
+   {nom:'Victoire '+m.equipe2,p:r.p2}
+  ];
+
+  const meilleur=options.reduce((a,b)=>a.p>=b.p?a:b);
+
+  let avis=meilleur.p<0.42?'Match très ouvert':'';
+
+  lignes+=
+   '<tr>'+
+   '<td style="text-align:left">'+esc(m.date||'')+'</td>'+
+   '<td style="text-align:left">'+esc(m.equipe1)+' vs '+esc(m.equipe2)+'</td>'+
+   '<td><b>'+esc(meilleur.nom)+'</b>'+(avis?'<br><small>'+avis+'</small>':'')+'</td>'+
+   '<td>'+pct(meilleur.p)+'</td>'+
+   '<td>'+esc(r.fiabilite)+'</td>'+
+   '</tr>';
+ });
+
+ zone.innerHTML=
+  '<table class="proba">'+
+  '<tr><th style="text-align:left">Date</th><th style="text-align:left">Match</th>'+
+  '<th>Résultat le plus probable</th><th>Probabilité</th><th>Fiabilité</th></tr>'+
+  lignes+
+  '</table>';
+}
+
 async function predictMatch(){
 
  const a=document.getElementById('pTeam1').value.trim();
@@ -910,4 +978,113 @@ async function compareTeams(){
  comparaisons++;
  analyses++;
 
- document.getElementById('comparisonCount').t
+ document.getElementById('comparisonCount').textContent=comparaisons;
+ document.getElementById('analysisCount').textContent=analyses;
+
+ zone.innerHTML=afficherStats(a,x)+'<hr>'+afficherStats(b,y);
+
+ ajouterHistorique(a+' VS '+b);
+}
+
+/* ---------- Sports ---------- */
+
+async function chooseSport(sport){
+
+ showPage('sports');
+
+ const zone=document.getElementById('sportResult');
+
+ await assurerDonnees();
+
+ const matchs=donnees[sport]||[];
+
+ const titre=sport.charAt(0).toUpperCase()+sport.slice(1);
+
+ if(matchs.length===0){
+  zone.innerHTML='<h3>'+esc(titre)+'</h3>Aucune donnée disponible pour cette discipline.';
+  return;
+ }
+
+ let html='<h3>'+esc(titre)+'</h3>';
+
+ matchs.forEach(m=>{
+
+  if(m.equipe1 && m.equipe2){
+
+   html+=
+    esc(m.equipe1)+' '+esc(m.score1)+
+    ' - '+esc(m.score2)+' '+esc(m.equipe2)+
+    '<br>Date : '+esc(m.date||'Non précisée')+
+    '<hr>';
+  }
+
+ });
+
+ zone.innerHTML=html;
+}
+
+/* ---------- Assistant ---------- */
+
+async function sendMessage(){
+
+ const input=document.getElementById('question');
+ const q=input.value.trim();
+ const zone=document.getElementById('response');
+
+ if(!q){
+  alert('Écrivez une question.');
+  return;
+ }
+
+ zone.textContent='Analyse en cours...';
+
+ const ok=await assurerDonnees();
+
+ if(!ok){
+  zone.textContent='Impossible de charger donnees.json.';
+  return;
+ }
+
+ const matchs=donnees.football||[];
+ const equipes=listeEquipes(matchs);
+
+ // Équipes citées dans la question, dans l'ordre où elles apparaissent
+ const trouvees=equipes
+  .map(e=>({e:e,pos:positionDansTexte(q,norm(e))}))
+  .filter(x=>x.pos!==-1)
+  .sort((a,b)=>a.pos-b.pos)
+  .map(x=>x.e);
+
+ if(trouvees.length>=2){
+
+  const r=calculerPronostic(matchs,trouvees[0],trouvees[1]);
+  zone.innerHTML=rendrePronostic(trouvees[0],trouvees[1],r,null);
+
+  ajouterHistorique('Assistant : '+trouvees[0]+' vs '+trouvees[1]);
+
+ }else if(trouvees.length===1){
+
+  zone.innerHTML=afficherStats(trouvees[0],analyserEquipe(matchs,trouvees[0]));
+
+  ajouterHistorique('Assistant : '+trouvees[0]);
+
+ }else{
+
+  zone.innerHTML=
+   'Je n\'ai trouvé aucune équipe de tes données dans ta question. '+
+   'Équipes connues : '+
+   (equipes.length>0?esc(equipes.slice(0,15).join(', ')):'aucune')+'.';
+ }
+
+ analyses++;
+ document.getElementById('analysisCount').textContent=analyses;
+
+ input.value='';
+}
+
+chargerDonnees();
+
+</script>
+
+</body>
+</html>
