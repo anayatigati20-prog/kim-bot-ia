@@ -27,6 +27,18 @@
     {"equipe1": "Villarreal", "equipe2": "Getafe", "score1": 2, "score2": 0, "date": "2026-11-08"},
     {"equipe1": "Atletico Madrid", "equipe2": "FC Barcelone", "score1": 1, "score2": 2, "date": "2026-11-08"}
   ],
+  "a_venir": [
+    {"equipe1": "Athletic Bilbao", "equipe2": "Espanyol", "date": "2026-11-20"},
+    {"equipe1": "Alaves", "equipe2": "Deportivo La Coruna", "date": "2026-11-21"},
+    {"equipe1": "Rayo Vallecano", "equipe2": "Valencia", "date": "2026-11-21"},
+    {"equipe1": "Sevilla", "equipe2": "Betis", "date": "2026-11-21"},
+    {"equipe1": "Real Madrid", "equipe2": "Celta Vigo", "date": "2026-11-21"},
+    {"equipe1": "FC Barcelone", "equipe2": "Villarreal", "date": "2026-11-22"},
+    {"equipe1": "Racing Santander", "equipe2": "Sociedad", "date": "2026-11-22"},
+    {"equipe1": "Osasuna", "equipe2": "Malaga", "date": "2026-11-22"},
+    {"equipe1": "Getafe", "equipe2": "Atletico Madrid", "date": "2026-11-22"},
+    {"equipe1": "Levante", "equipe2": "Elche", "date": "2026-11-23"}
+  ],
   "basketball": [],
   "tennis": [],
   "volleyball": [],
