@@ -5,362 +5,336 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KIM BOT IA | Sports Analytics</title>
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
 <style>
-*{
- margin:0;
- padding:0;
- box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
 
 :root{
- --red:#ff1744;
- --background:#08090d;
- --panel:#151721;
- --border:#303442;
+ --red:#e8262d;
+ --red-soft:#e8262d33;
+ --green:#43d99b;
+ --background:#050506;
+ --panel:#0d0d10;
+ --border:#26262e;
  --text:#ffffff;
- --muted:#a4a7b5;
+ --muted:#8d8e99;
+ --title:'Anton','Impact','Arial Narrow',sans-serif;
+ --body:'Inter',Arial,sans-serif;
 }
+
+html{scroll-behavior:smooth;}
 
 body{
  background:var(--background);
  color:var(--text);
- font-family:Arial,sans-serif;
+ font-family:var(--body);
+ background-image:radial-gradient(circle at 78% -10%,#e8262d22,transparent 45%);
+ background-repeat:no-repeat;
 }
 
-.sidebar{
- position:fixed;
- left:0;
- top:0;
- width:235px;
- height:100vh;
- background:#0d0f16;
- border-right:1px solid var(--border);
- padding:25px 15px;
- z-index:10;
+/* ---------- Barre du haut ---------- */
+
+.navbar{
+ position:sticky;top:0;z-index:20;
+ display:flex;align-items:center;justify-content:space-between;gap:20px;
+ padding:16px 40px;
+ background:#050506e6;
+ backdrop-filter:blur(8px);
+ border-bottom:1px solid var(--border);
 }
 
 .logo{
- color:var(--red);
- font-size:25px;
- font-weight:bold;
- text-align:center;
- margin-bottom:40px;
- text-shadow:0 0 15px var(--red);
+ font-family:var(--title);
+ font-size:24px;letter-spacing:1px;
+ color:var(--text);white-space:nowrap;
 }
+.logo span{color:var(--red);}
+
+.menu{display:flex;gap:6px;overflow-x:auto;}
 
 .menu button{
- display:block;
- width:100%;
- padding:15px;
- margin:8px 0;
- background:transparent;
- color:#aaa;
- border:none;
- text-align:left;
- border-radius:8px;
- cursor:pointer;
- font-size:15px;
+ padding:9px 14px;background:transparent;color:var(--muted);
+ border:none;border-radius:4px;cursor:pointer;
+ font-family:var(--body);font-size:12px;font-weight:600;
+ text-transform:uppercase;letter-spacing:1.5px;white-space:nowrap;
+ transition:.2s;
+}
+.menu button:hover{color:var(--text);}
+.menu button.active{color:var(--red);box-shadow:inset 0 -2px 0 var(--red);border-radius:0;}
+
+.status{color:var(--green);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;}
+
+/* ---------- Pages ---------- */
+
+main{max-width:1180px;margin:0 auto;padding:50px 40px 30px;min-height:90vh;}
+
+.section{display:none;}
+.section.active{display:block;}
+
+.kicker{
+ color:var(--red);font-size:12px;font-weight:800;
+ letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;
 }
 
-.menu button:hover,
-.menu button.active{
- background:#29121a;
- color:var(--red);
- box-shadow:0 0 15px #ff174433;
+.mega{
+ font-family:var(--title);font-weight:400;
+ font-size:clamp(58px,11vw,150px);
+ line-height:.92;text-transform:uppercase;letter-spacing:1px;
 }
 
-main{
- margin-left:235px;
- padding:30px;
- min-height:100vh;
+.title{
+ font-family:var(--title);font-weight:400;
+ font-size:clamp(38px,6vw,76px);
+ line-height:.95;text-transform:uppercase;letter-spacing:1px;
+ margin-bottom:12px;
 }
 
-.topbar{
- display:flex;
- justify-content:space-between;
- align-items:center;
- margin-bottom:35px;
+.red{color:var(--red);}
+
+.lead{color:var(--muted);line-height:1.8;max-width:620px;margin-top:22px;font-size:15px;}
+.sub{color:var(--muted);line-height:1.7;max-width:640px;margin-bottom:28px;font-size:14px;}
+
+.hero{padding:30px 0 60px;}
+
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px;}
+
+h2.block{
+ font-family:var(--title);font-weight:400;font-size:34px;
+ text-transform:uppercase;letter-spacing:1px;
+ margin:70px 0 20px;
 }
 
-.topbar h1{
- color:var(--red);
- font-size:25px;
-}
-
-.status{
- color:#43d99b;
- font-size:13px;
-}
-
-.welcome{
- margin-bottom:30px;
-}
-
-.welcome h2{
- font-size:29px;
- margin-bottom:10px;
-}
-
-.welcome p{
- color:var(--muted);
-}
-
-.cards{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:18px;
-}
-
-.card{
- background:linear-gradient(145deg,#191c27,#101119);
- border:1px solid var(--border);
- border-radius:14px;
- padding:23px;
- transition:.3s;
-}
-
-.card:hover{
- transform:translateY(-4px);
- border-color:var(--red);
- box-shadow:0 0 20px #ff174422;
-}
-
-.card h3{
- color:var(--red);
- margin-bottom:15px;
-}
-
-.card p{
- color:var(--muted);
- line-height:1.7;
-}
-
-.stat-number{
- font-size:28px;
- color:white;
- font-weight:bold;
- margin-top:12px;
-}
-
-.section{
- display:none;
-}
-
-.section.active{
- display:block;
-}
+/* ---------- Boutons ---------- */
 
 .action{
- margin-top:18px;
- padding:13px 19px;
- border:none;
- border-radius:7px;
- background:var(--red);
- color:white;
- font-weight:bold;
- cursor:pointer;
+ margin-top:18px;padding:14px 26px;border:1px solid var(--red);border-radius:999px;
+ background:var(--red);color:white;font-family:var(--body);font-weight:800;
+ font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.2s;
+}
+.action:hover{background:transparent;color:var(--red);box-shadow:0 0 22px var(--red-soft);}
+
+.hero-actions .action{margin-top:0;}
+
+.ghost{
+ padding:14px 26px;border:1px solid var(--border);border-radius:999px;
+ background:transparent;color:var(--text);font-family:var(--body);font-weight:800;
+ font-size:12px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.2s;
+}
+.ghost:hover{border-color:var(--red);color:var(--red);}
+
+/* ---------- Cartes ---------- */
+
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+
+.card{
+ background:var(--panel);
+ border:1px solid var(--border);border-radius:6px;padding:26px;transition:.25s;
+}
+.card:hover{border-color:var(--red);}
+.card h3{
+ color:var(--muted);font-size:12px;font-weight:800;
+ letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;
+}
+.card p{color:var(--muted);line-height:1.7;font-size:14px;}
+
+.stat-number{
+ font-family:var(--title);font-size:64px;line-height:1;
+ color:var(--text);margin:6px 0 10px;
 }
 
-.action:hover{
- box-shadow:0 0 18px var(--red);
-}
+/* ---------- Liste numérotée des sports ---------- */
 
-input,select{
- width:100%;
- padding:14px;
- margin-top:12px;
- background:#20232e;
- color:white;
- border:1px solid #393d4b;
- border-radius:7px;
-}
-
-.sports{
- display:grid;
- grid-template-columns:repeat(3,1fr);
- gap:15px;
- margin-top:20px;
-}
+.sportlist{border-top:1px solid var(--border);}
 
 .sport{
- padding:22px;
- text-align:center;
- background:var(--panel);
- border:1px solid var(--border);
- border-radius:12px;
- cursor:pointer;
+ display:flex;align-items:center;gap:26px;
+ padding:22px 6px;border-bottom:1px solid var(--border);
+ cursor:pointer;transition:.2s;
 }
+.sport .num{
+ font-family:var(--title);font-size:22px;color:var(--red);min-width:42px;
+}
+.sport .name{
+ font-family:var(--title);font-size:34px;text-transform:uppercase;
+ letter-spacing:1px;flex:1;
+}
+.sport .icon{font-size:26px;filter:grayscale(1);transition:.2s;}
+.sport:hover{padding-left:20px;background:#e8262d10;}
+.sport:hover .name{color:var(--red);}
+.sport:hover .icon{filter:none;}
 
-.sport:hover{
- border-color:var(--red);
- color:var(--red);
+/* ---------- Formulaires et résultats ---------- */
+
+input,select{
+ width:100%;padding:15px;margin-top:12px;background:#09090c;color:white;
+ border:1px solid var(--border);border-radius:4px;
+ font-family:var(--body);font-size:14px;
 }
+input:focus{outline:none;border-color:var(--red);}
+
+.odds-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+.label{color:var(--muted);font-size:12px;letter-spacing:1px;text-transform:uppercase;margin-top:22px;}
 
 .result{
- margin-top:20px;
- padding:20px;
- background:#171923;
- border-radius:10px;
- color:#ccc;
- line-height:1.9;
+ margin-top:22px;padding:22px;background:#09090c;
+ border:1px solid var(--border);border-left:3px solid var(--red);border-radius:4px;
+ color:#cfcfd6;line-height:1.9;font-size:14px;
 }
-
 .result h3{
- color:var(--red);
- margin-bottom:10px;
+ font-family:var(--title);font-weight:400;font-size:28px;
+ text-transform:uppercase;letter-spacing:1px;
+ color:var(--red);margin-bottom:10px;
 }
 
-hr{
- border:0;
- border-top:1px solid var(--border);
- margin:20px 0;
+table.proba{width:100%;border-collapse:collapse;margin-top:14px;font-size:13px;}
+table.proba th,table.proba td{padding:10px 6px;border-bottom:1px solid var(--border);text-align:center;}
+table.proba th{color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:1px;font-size:11px;}
+.value{color:var(--green);font-weight:800;}
+.bar{height:8px;border-radius:4px;background:#1b1b22;overflow:hidden;margin:6px 0 14px;}
+.bar span{display:block;height:100%;background:var(--red);}
+
+.warning{
+ margin-top:18px;padding:14px;border:1px solid #5a1d22;background:#1a0b0d;
+ border-radius:4px;color:#e6a9ae;font-size:12px;line-height:1.7;
+}
+
+hr{border:0;border-top:1px solid var(--border);margin:20px 0;}
+
+/* ---------- Bas de page ---------- */
+
+.closing{
+ margin-top:90px;padding-top:50px;border-top:1px solid var(--border);
 }
 
 footer{
- margin-top:50px;
- color:#555;
- text-align:center;
+ padding:30px 40px 40px;color:#55565f;text-align:center;
+ font-size:12px;line-height:1.8;letter-spacing:.5px;
 }
 
+/* ---------- Téléphone ---------- */
+
 @media(max-width:900px){
-
- .sidebar{
-  width:100%;
-  height:auto;
-  position:relative;
- }
-
- .logo{
-  margin-bottom:15px;
- }
-
- .menu{
-  display:flex;
-  overflow-x:auto;
- }
-
- .menu button{
-  min-width:115px;
-  text-align:center;
- }
-
- main{
-  margin-left:0;
-  padding:20px;
- }
-
- .cards,.sports{
-  grid-template-columns:1fr;
- }
+ .navbar{flex-direction:column;align-items:stretch;gap:8px;padding:14px 18px;}
+ .logo{text-align:center;}
+ .status{display:none;}
+ .menu{justify-content:flex-start;}
+ main{padding:34px 18px 20px;}
+ .cards{grid-template-columns:1fr;}
+ .odds-row{grid-template-columns:1fr;}
+ .sport .name{font-size:26px;}
 }
 </style>
 </head>
 
 <body>
 
-<aside class="sidebar">
+<header class="navbar">
+ <div class="logo">KIM BOT <span>IA</span> 👑</div>
 
- <div class="logo">KIM BOT IA 👑</div>
+ <nav class="menu">
+  <button class="active" onclick="showPage('home',this)">Accueil</button>
+  <button onclick="showPage('sports',this)">Sports</button>
+  <button onclick="showPage('stats',this)">Statistiques</button>
+  <button onclick="showPage('predict',this)">Pronostic</button>
+  <button onclick="showPage('assistant',this)">Assistant IA</button>
+  <button onclick="showPage('history',this)">Historique</button>
+  <button onclick="showPage('settings',this)">Paramètres</button>
+ </nav>
 
- <div class="menu">
-  <button class="active" onclick="showPage('home',this)">🏠 Accueil</button>
-  <button onclick="showPage('sports',this)">🏆 Sports</button>
-  <button onclick="showPage('stats',this)">📊 Statistiques</button>
-  <button onclick="showPage('assistant',this)">🤖 Assistant IA</button>
-  <button onclick="showPage('history',this)">📜 Historique</button>
-  <button onclick="showPage('settings',this)">⚙️ Paramètres</button>
- </div>
-
-</aside>
+ <span class="status">● Système actif</span>
+</header>
 
 <main>
 
-<div class="topbar">
- <h1>KIM BOT IA</h1>
- <span class="status">● SYSTÈME ACTIF</span>
-</div>
-
 <!-- ACCUEIL -->
-
 <section id="home" class="section active">
 
- <div class="welcome">
-  <h2>Bienvenue dans KIM BOT IA</h2>
-  <p>Votre centre intelligent d'analyse et de statistiques sportives.</p>
+ <div class="hero">
+  <div class="kicker">— Analyse · Statistiques · Pronostics</div>
+
+  <h1 class="mega">Les chiffres<br>du <span class="red">jeu.</span></h1>
+
+  <p class="lead">
+   Bienvenue dans KIM BOT IA. Compare des équipes, étudie leurs résultats
+   et obtiens des probabilités calculées à partir des vrais scores.
+  </p>
+
+  <div class="hero-actions">
+   <button class="action" onclick="showPage('predict')">Lancer un pronostic</button>
+   <button class="ghost" onclick="showPage('assistant')">Parler à l'assistant</button>
+  </div>
  </div>
 
  <div class="cards">
-
   <div class="card">
-   <h3>🏆 Sports disponibles</h3>
-   <p>Explorez plusieurs disciplines sportives.</p>
+   <h3>Sports disponibles</h3>
    <div class="stat-number">06</div>
+   <p>Explorez plusieurs disciplines sportives.</p>
   </div>
 
   <div class="card">
-   <h3>📊 Analyse statistique</h3>
-   <p>Étudiez les résultats et les performances.</p>
+   <h3>Résultats analysés</h3>
    <div class="stat-number" id="totalResults">0</div>
+   <p>Étudiez les résultats et les performances.</p>
   </div>
 
   <div class="card">
-   <h3>🤖 Assistant intelligent</h3>
-   <p>Posez des questions sur les statistiques sportives.</p>
-   <button class="action" onclick="showPage('assistant')">Ouvrir</button>
+   <h3>Pronostic</h3>
+   <div class="stat-number">%</div>
+   <p>Probabilités estimées d'après les résultats passés.</p>
   </div>
-
  </div>
 
- <br><br>
+ <h2 class="block">Disciplines <span class="red">disponibles.</span></h2>
 
- <h2>Disciplines disponibles</h2>
+ <div class="sportlist">
+  <div class="sport" onclick="chooseSport('football')"><span class="num">01</span><span class="name">Football</span><span class="icon">⚽</span></div>
+  <div class="sport" onclick="chooseSport('basketball')"><span class="num">02</span><span class="name">Basketball</span><span class="icon">🏀</span></div>
+  <div class="sport" onclick="chooseSport('tennis')"><span class="num">03</span><span class="name">Tennis</span><span class="icon">🎾</span></div>
+  <div class="sport" onclick="chooseSport('volleyball')"><span class="num">04</span><span class="name">Volleyball</span><span class="icon">🏐</span></div>
+  <div class="sport" onclick="chooseSport('hockey')"><span class="num">05</span><span class="name">Hockey</span><span class="icon">🏒</span></div>
+  <div class="sport" onclick="chooseSport('baseball')"><span class="num">06</span><span class="name">Baseball</span><span class="icon">⚾</span></div>
+ </div>
 
- <div class="sports">
-  <div class="sport" onclick="chooseSport('football')">⚽ Football</div>
-  <div class="sport" onclick="chooseSport('basketball')">🏀 Basketball</div>
-  <div class="sport" onclick="chooseSport('tennis')">🎾 Tennis</div>
-  <div class="sport" onclick="chooseSport('volleyball')">🏐 Volleyball</div>
-  <div class="sport" onclick="chooseSport('hockey')">🏒 Hockey</div>
-  <div class="sport" onclick="chooseSport('baseball')">⚾ Baseball</div>
+ <div class="closing">
+  <div class="kicker">— Prêt ?</div>
+  <h2 class="title">Choisis un match.<br><span class="red">Lis les chiffres.</span></h2>
+  <button class="action" onclick="showPage('predict')">Commencer</button>
  </div>
 
 </section>
 
 <!-- SPORTS -->
-
 <section id="sports" class="section">
 
- <h2>🏆 Centre sportif</h2>
+ <div class="kicker">— 01 / Disciplines</div>
+ <h2 class="title">Centre <span class="red">sportif.</span></h2>
+ <p class="sub">Sélectionnez une discipline pour afficher les derniers résultats enregistrés.</p>
 
- <p style="color:#999;margin-top:10px">
- Sélectionnez une discipline.
- </p>
-
- <div class="sports">
-  <div class="sport" onclick="chooseSport('football')">⚽ Football</div>
-  <div class="sport" onclick="chooseSport('basketball')">🏀 Basketball</div>
-  <div class="sport" onclick="chooseSport('tennis')">🎾 Tennis</div>
-  <div class="sport" onclick="chooseSport('volleyball')">🏐 Volleyball</div>
-  <div class="sport" onclick="chooseSport('hockey')">🏒 Hockey</div>
-  <div class="sport" onclick="chooseSport('baseball')">⚾ Baseball</div>
+ <div class="sportlist">
+  <div class="sport" onclick="chooseSport('football')"><span class="num">01</span><span class="name">Football</span><span class="icon">⚽</span></div>
+  <div class="sport" onclick="chooseSport('basketball')"><span class="num">02</span><span class="name">Basketball</span><span class="icon">🏀</span></div>
+  <div class="sport" onclick="chooseSport('tennis')"><span class="num">03</span><span class="name">Tennis</span><span class="icon">🎾</span></div>
+  <div class="sport" onclick="chooseSport('volleyball')"><span class="num">04</span><span class="name">Volleyball</span><span class="icon">🏐</span></div>
+  <div class="sport" onclick="chooseSport('hockey')"><span class="num">05</span><span class="name">Hockey</span><span class="icon">🏒</span></div>
+  <div class="sport" onclick="chooseSport('baseball')"><span class="num">06</span><span class="name">Baseball</span><span class="icon">⚾</span></div>
  </div>
 
- <div id="sportResult" class="result">
-  En attente de sélection.
- </div>
+ <div id="sportResult" class="result">En attente de sélection.</div>
 
 </section>
 
 <!-- STATISTIQUES -->
-
 <section id="stats" class="section">
 
- <h2>📊 Centre statistique</h2>
-
- <br>
+ <div class="kicker">— 02 / Données</div>
+ <h2 class="title">Centre <span class="red">statistique.</span></h2>
+ <p class="sub">Compare deux équipes à partir des résultats présents dans tes données.</p>
 
  <div class="cards">
-
   <div class="card">
    <h3>Résultats étudiés</h3>
    <div class="stat-number" id="resultCount">0</div>
@@ -378,119 +352,188 @@ footer{
    <div class="stat-number" id="analysisCount">0</div>
    <p>Consultations effectuées.</p>
   </div>
-
  </div>
 
- <div class="card" style="margin-top:20px">
-
+ <div class="card" style="margin-top:16px">
   <h3>Comparer deux équipes</h3>
-
   <input id="team1" placeholder="Nom de la première équipe">
-
   <input id="team2" placeholder="Nom de la deuxième équipe">
+  <button class="action" onclick="compareTeams()">Comparer</button>
+  <div id="comparison" class="result">Entrez deux équipes pour consulter leurs statistiques.</div>
+ </div>
 
-  <button class="action" onclick="compareTeams()">
-   Comparer
-  </button>
+</section>
 
-  <div id="comparison" class="result">
-   Entrez deux équipes pour consulter leurs statistiques.
+<!-- PRONOSTIC -->
+<section id="predict" class="section">
+
+ <div class="kicker">— 03 / Probabilités</div>
+ <h2 class="title">Pronostic <span class="red">football.</span></h2>
+ <p class="sub">
+  Le modèle estime les probabilités à partir des buts marqués et encaissés dans tes données.
+  L'équipe 1 est considérée comme jouant à domicile.
+ </p>
+
+ <div class="card">
+  <input id="pTeam1" placeholder="Équipe à domicile">
+  <input id="pTeam2" placeholder="Équipe à l'extérieur">
+
+  <div class="label">Cotes du bookmaker (facultatif, pour détecter un pari de valeur)</div>
+  <div class="odds-row">
+   <input id="odd1" type="number" step="0.01" min="1.01" placeholder="Cote victoire 1">
+   <input id="oddN" type="number" step="0.01" min="1.01" placeholder="Cote nul">
+   <input id="odd2" type="number" step="0.01" min="1.01" placeholder="Cote victoire 2">
   </div>
 
+  <button class="action" onclick="predictMatch()">Calculer le pronostic</button>
+
+  <div id="predictResult" class="result">Entre deux équipes pour obtenir les probabilités estimées.</div>
+
+  <div class="warning">
+   ⚠️ Ceci est une estimation statistique, pas une garantie. Les bookmakers intègrent déjà ces
+   informations dans leurs cotes, et on peut perdre de l'argent. Jeu réservé aux plus de 18 ans.
+   Ne mise jamais plus que ce que tu peux te permettre de perdre.
+  </div>
  </div>
 
 </section>
 
 <!-- ASSISTANT -->
-
 <section id="assistant" class="section">
 
- <h2>🤖 Assistant KIM IA</h2>
-
- <br>
+ <div class="kicker">— 04 / Assistant</div>
+ <h2 class="title">Assistant <span class="red">KIM IA.</span></h2>
+ <p class="sub">
+  Écris par exemple : « Real contre Barça », « qui gagne Atletico ou Real ? »
+  ou le nom d'une seule équipe, et je te donne ses statistiques ou le pronostic du match.
+ </p>
 
  <div class="card">
+  <input id="question" placeholder="Ex : Real contre Barça"
+   onkeydown="if(event.key==='Enter')sendMessage()">
 
-  <p>
-   Bonjour ! Je suis KIM IA, votre assistant d'analyse sportive éducative.
-  </p>
+  <button class="action" onclick="sendMessage()">Envoyer</button>
 
-  <input
-   id="question"
-   placeholder="Posez une question sur les statistiques sportives..."
-  >
-
-  <button class="action" onclick="sendMessage()">
-   Envoyer
-  </button>
-
-  <div id="response" class="result">
-   Assistant en attente de votre message.
-  </div>
-
+  <div id="response" class="result">Assistant en attente de votre message.</div>
  </div>
 
 </section>
 
 <!-- HISTORIQUE -->
-
 <section id="history" class="section">
-
- <h2>📜 Historique</h2>
-
+ <div class="kicker">— 05 / Activité</div>
+ <h2 class="title">Ton <span class="red">historique.</span></h2>
  <br>
-
  <div class="card">
-  <div id="historyContent">
-   Aucune analyse enregistrée.
-  </div>
+  <div id="historyContent">Aucune analyse enregistrée.</div>
  </div>
-
 </section>
 
 <!-- PARAMETRES -->
-
 <section id="settings" class="section">
-
- <h2>⚙️ Paramètres</h2>
-
+ <div class="kicker">— 06 / Application</div>
+ <h2 class="title">Para<span class="red">mètres.</span></h2>
  <br>
-
  <div class="card">
-
   <h3>Version de l'application</h3>
-
-  <p>KIM BOT IA — VERSION 4.0</p>
-
+  <p>KIM BOT IA — VERSION 5.2</p>
   <br>
-
-  <p>Interface : Futuriste</p>
+  <p>Interface : Éditoriale</p>
   <p>Thème : Noir et rouge</p>
-  <p>Mode : Analyse sportive éducative</p>
-
+  <p>Mode : Analyse sportive et probabilités</p>
  </div>
-
 </section>
 
-<footer>
- KIM BOT IA © 2026 — TECHNOLOGIE & INTELLIGENCE
-</footer>
-
 </main>
+
+<footer>
+ KIM BOT IA © 2026 — TECHNOLOGIE & INTELLIGENCE<br>
+ Les pronostics sont des estimations statistiques et ne garantissent aucun gain. 18+ uniquement.
+</footer>
 
 <script>
 
 let donnees={};
 let comparaisons=0;
 let analyses=0;
+let historiqueItems=[];
+
+/* ---------- Outils ---------- */
+
+// Protège l'affichage : empêche qu'un texte tapé par l'utilisateur soit exécuté comme du code HTML
+function esc(texte){
+ return String(texte)
+  .replace(/&/g,'&amp;')
+  .replace(/</g,'&lt;')
+  .replace(/>/g,'&gt;')
+  .replace(/"/g,'&quot;')
+  .replace(/'/g,'&#39;');
+}
+
+// Liste des surnoms : à gauche ce que l'utilisateur peut écrire, à droite le vrai nom
+const ALIAS={
+ 'real':'real madrid','real madrid':'real madrid','rm':'real madrid',
+ 'barca':'fc barcelone','barcelone':'fc barcelone','barcelona':'fc barcelone',
+ 'fc barcelone':'fc barcelone','fc barcelona':'fc barcelone','fcb':'fc barcelone',
+ 'psg':'paris saint germain','paris sg':'paris saint germain','paris saint germain':'paris saint germain',
+ 'om':'marseille','olympique de marseille':'marseille','marseille':'marseille',
+ 'ol':'lyon','olympique lyonnais':'lyon','lyon':'lyon',
+ 'man city':'manchester city','city':'manchester city','manchester city':'manchester city',
+ 'man utd':'manchester united','man united':'manchester united','manchester united':'manchester united',
+ 'bayern':'bayern munich','bayern munchen':'bayern munich','bayern munich':'bayern munich',
+ 'atletico':'atletico madrid','atleti':'atletico madrid','atletico madrid':'atletico madrid',
+ 'juve':'juventus','juventus':'juventus',
+ 'inter':'inter milan','inter milan':'inter milan','internazionale':'inter milan',
+ 'ac milan':'ac milan',
+ 'spurs':'tottenham','tottenham':'tottenham','tottenham hotspur':'tottenham',
+ 'dortmund':'borussia dortmund','bvb':'borussia dortmund','borussia dortmund':'borussia dortmund'
+};
+
+// Enlève les accents, les majuscules et la ponctuation
+function simplifier(texte){
+ return String(texte||'')
+  .toLowerCase()
+  .normalize('NFD')
+  .replace(/[\u0300-\u036f]/g,'')
+  .replace(/[^a-z0-9]+/g,' ')
+  .trim();
+}
+
+function norm(texte){
+ const s=simplifier(texte);
+ return ALIAS[s]||s;
+}
+
+// Trouve où une équipe (ou un de ses surnoms) apparaît dans une phrase
+function positionDansTexte(texte,canon){
+
+ const t=' '+simplifier(texte)+' ';
+ let best=-1;
+
+ const noms=[canon];
+
+ for(const cle in ALIAS){
+  if(ALIAS[cle]===canon){noms.push(cle);}
+ }
+
+ noms.forEach(n=>{
+  const i=t.indexOf(' '+n+' ');
+  if(i!==-1 && (best===-1 || i<best)){best=i;}
+ });
+
+ return best;
+}
+
+function pct(x){
+ return (x*100).toFixed(1)+' %';
+}
 
 function showPage(page,button){
 
  document.querySelectorAll('.section')
  .forEach(s=>s.classList.remove('active'));
 
- document.getElementById(page)
- .classList.add('active');
+ document.getElementById(page).classList.add('active');
 
  document.querySelectorAll('.menu button')
  .forEach(b=>b.classList.remove('active'));
@@ -499,6 +542,17 @@ function showPage(page,button){
   button.classList.add('active');
  }
 }
+
+function ajouterHistorique(texte){
+
+ historiqueItems.unshift(texte);
+ historiqueItems=historiqueItems.slice(0,30);
+
+ document.getElementById('historyContent').innerHTML=
+  historiqueItems.map(t=>'<p>'+esc(t)+'</p>').join('');
+}
+
+/* ---------- Données ---------- */
 
 async function chargerDonnees(){
 
@@ -536,230 +590,324 @@ async function chargerDonnees(){
  }
 }
 
-async function chooseSport(sport){
+async function assurerDonnees(){
 
- showPage('sports');
-
- const zone=document.getElementById('sportResult');
-
- if(Object.keys(donnees).length===0){
-  await chargerDonnees();
+ if(Object.keys(donnees).length>0){
+  return true;
  }
 
- const matchs=donnees[sport] || [];
+ return await chargerDonnees();
+}
 
- let titre=sport.charAt(0).toUpperCase()+sport.slice(1);
+/* ---------- Statistiques d'une équipe ---------- */
 
- if(matchs.length===0){
+function analyserEquipe(matchs,equipe){
 
-  zone.innerHTML=
-  '<h3>'+titre+'</h3>'+
-  'Aucune donnée disponible pour cette discipline.';
+ const cible=norm(equipe);
 
-  return;
- }
-
- let html='<h3>'+titre+'</h3>';
+ let s={joues:0,victoires:0,nuls:0,defaites:0,butsMarques:0,butsEncaisses:0};
 
  matchs.forEach(m=>{
 
-  if(m.equipe1 && m.equipe2){
+  if(norm(m.equipe1)===cible || norm(m.equipe2)===cible){
 
-   html+=
-   m.equipe1+' '+m.score1+
-   ' - '+m.score2+' '+m.equipe2+
-   '<br>Date : '+(m.date || 'Non précisée')+
-   '<hr>';
+   const domicile=norm(m.equipe1)===cible;
 
+   const marque=Number(domicile?m.score1:m.score2);
+   const encaisse=Number(domicile?m.score2:m.score1);
+
+   if(isNaN(marque) || isNaN(encaisse)){
+    return;
+   }
+
+   s.joues++;
+   s.butsMarques+=marque;
+   s.butsEncaisses+=encaisse;
+
+   if(marque>encaisse){
+    s.victoires++;
+   }else if(marque===encaisse){
+    s.nuls++;
+   }else{
+    s.defaites++;
+   }
   }
 
  });
 
- zone.innerHTML=html;
+ return s;
 }
+
+function afficherStats(nom,s){
+
+ if(s.joues===0){
+  return '<h3>'+esc(nom)+'</h3>Aucun match trouvé pour cette équipe dans les données.';
+ }
+
+ return `
+  <h3>${esc(nom)}</h3>
+  Matchs joués : ${s.joues}<br>
+  Victoires : ${s.victoires}<br>
+  Nuls : ${s.nuls}<br>
+  Défaites : ${s.defaites}<br>
+  Buts marqués : ${s.butsMarques}<br>
+  Buts encaissés : ${s.butsEncaisses}
+ `;
+}
+
+function listeEquipes(matchs){
+
+ const noms={};
+
+ matchs.forEach(m=>{
+  if(m.equipe1){noms[norm(m.equipe1)]=m.equipe1;}
+  if(m.equipe2){noms[norm(m.equipe2)]=m.equipe2;}
+ });
+
+ return Object.values(noms);
+}
+
+/* ---------- Modèle de pronostic (Poisson) ---------- */
+
+function factorielle(n){
+ let r=1;
+ for(let i=2;i<=n;i++){r*=i;}
+ return r;
+}
+
+function poisson(k,lambda){
+ return Math.exp(-lambda)*Math.pow(lambda,k)/factorielle(k);
+}
+
+// Retourne une erreur si les données sont insuffisantes
+function calculerPronostic(matchs,equipeDom,equipeExt){
+
+ const valides=matchs.filter(m=>
+  m.equipe1 && m.equipe2 &&
+  !isNaN(Number(m.score1)) && !isNaN(Number(m.score2))
+ );
+
+ if(valides.length===0){
+  return {erreur:'Aucun match exploitable dans les données.'};
+ }
+
+ const sd=analyserEquipe(valides,equipeDom);
+ const se=analyserEquipe(valides,equipeExt);
+
+ if(sd.joues===0 || se.joues===0){
+  return {erreur:'Il faut au moins un match dans les données pour chaque équipe.'};
+ }
+
+ // Moyennes de la compétition
+ let butsDom=0,butsExt=0;
+
+ valides.forEach(m=>{
+  butsDom+=Number(m.score1);
+  butsExt+=Number(m.score2);
+ });
+
+ const moyDom=butsDom/valides.length;
+ const moyExt=butsExt/valides.length;
+ const moyEquipe=(moyDom+moyExt)/2;
+
+ // Force offensive / défensive, ramenée vers 1 quand il y a peu de matchs
+ function forces(s){
+
+  const poids=s.joues/(s.joues+5);
+
+  const attaque=(s.butsMarques/s.joues)/moyEquipe;
+  const defense=(s.butsEncaisses/s.joues)/moyEquipe;
+
+  return {
+   attaque:1+(attaque-1)*poids,
+   defense:1+(defense-1)*poids
+  };
+ }
+
+ const fd=forces(sd);
+ const fe=forces(se);
+
+ const lambdaDom=Math.max(0.2,moyDom*fd.attaque*fe.defense);
+ const lambdaExt=Math.max(0.2,moyExt*fe.attaque*fd.defense);
+
+ let p1=0,pN=0,p2=0;
+
+ for(let i=0;i<=10;i++){
+  for(let j=0;j<=10;j++){
+
+   const p=poisson(i,lambdaDom)*poisson(j,lambdaExt);
+
+   if(i>j){p1+=p;}
+   else if(i===j){pN+=p;}
+   else{p2+=p;}
+  }
+ }
+
+ // On remet les probabilités à 100 % (la matrice est tronquée à 10 buts)
+ const total=p1+pN+p2;
+ p1/=total;pN/=total;p2/=total;
+
+ const min=Math.min(sd.joues,se.joues);
+
+ let fiabilite='faible';
+ if(min>=10){fiabilite='correcte';}
+ else if(min>=5){fiabilite='moyenne';}
+
+ return {
+  p1,pN,p2,
+  lambdaDom,lambdaExt,
+  matchsDom:sd.joues,
+  matchsExt:se.joues,
+  fiabilite
+ };
+}
+
+function rendrePronostic(nomDom,nomExt,r,cotes){
+
+ if(r.erreur){
+  return esc(r.erreur);
+ }
+
+ const issues=[
+  {nom:'Victoire '+nomDom,p:r.p1,cote:cotes?cotes.c1:null},
+  {nom:'Match nul',p:r.pN,cote:cotes?cotes.cN:null},
+  {nom:'Victoire '+nomExt,p:r.p2,cote:cotes?cotes.c2:null}
+ ];
+
+ const meilleure=issues.reduce((a,b)=>a.p>=b.p?a:b);
+
+ let lignes='';
+ let valeurs=[];
+
+ issues.forEach(i=>{
+
+  let colCote='—',colEdge='—';
+
+  if(i.cote){
+   const edge=i.p*i.cote-1;
+   colCote=i.cote.toFixed(2);
+
+   if(edge>0.05 && r.fiabilite!=='faible'){
+    colEdge='<span class="value">+'+(edge*100).toFixed(1)+' %</span>';
+    valeurs.push(i.nom);
+   }else{
+    colEdge=(edge*100).toFixed(1)+' %';
+   }
+  }
+
+  lignes+=`
+   <tr>
+    <td style="text-align:left">${esc(i.nom)}</td>
+    <td>${pct(i.p)}</td>
+    <td>${(1/i.p).toFixed(2)}</td>
+    <td>${colCote}</td>
+    <td>${colEdge}</td>
+   </tr>`;
+ });
+
+ let html=`
+  <h3>${esc(nomDom)} vs ${esc(nomExt)}</h3>
+  <div class="bar"><span style="width:${(r.p1*100).toFixed(0)}%"></span></div>
+  Buts attendus : ${r.lambdaDom.toFixed(2)} - ${r.lambdaExt.toFixed(2)}<br>
+  Fiabilité des données : <b>${r.fiabilite}</b>
+  (${r.matchsDom} et ${r.matchsExt} matchs analysés)
+
+  <table class="proba">
+   <tr>
+    <th style="text-align:left">Issue</th>
+    <th>Probabilité</th>
+    <th>Cote équitable</th>
+    <th>Cote bookmaker</th>
+    <th>Avantage</th>
+   </tr>
+   ${lignes}
+  </table>
+  <br>
+  Issue la plus probable selon le modèle : <b>${esc(meilleure.nom)}</b> (${pct(meilleure.p)}).
+ `;
+
+ if(r.fiabilite==='faible'){
+  html+='<br>⚠️ Peu de matchs dans les données : le résultat est peu fiable et aucun pari de valeur n\'est signalé.';
+ }
+
+ if(valeurs.length>0){
+  html+='<br>💡 Pari de valeur détecté (la cote est supérieure à la cote équitable du modèle) : <b>'+
+   valeurs.map(esc).join(', ')+'</b>. Cela reste une estimation, pas une certitude.';
+ }else if(cotes){
+  html+='<br>Aucun pari de valeur détecté avec ces cotes : mieux vaut ne pas parier sur ce match.';
+ }
+
+ return html;
+}
+
+async function predictMatch(){
+
+ const a=document.getElementById('pTeam1').value.trim();
+ const b=document.getElementById('pTeam2').value.trim();
+ const zone=document.getElementById('predictResult');
+
+ if(!a || !b){
+  alert('Entrez les deux noms des équipes.');
+  return;
+ }
+
+ zone.textContent='Calcul en cours...';
+
+ const ok=await assurerDonnees();
+
+ if(!ok){
+  zone.textContent='Impossible de charger donnees.json.';
+  return;
+ }
+
+ const c1=parseFloat(document.getElementById('odd1').value);
+ const cN=parseFloat(document.getElementById('oddN').value);
+ const c2=parseFloat(document.getElementById('odd2').value);
+
+ let cotes=null;
+
+ if(c1>1 && cN>1 && c2>1){
+  cotes={c1,cN,c2};
+ }
+
+ const r=calculerPronostic(donnees.football||[],a,b);
+
+ zone.innerHTML=rendrePronostic(a,b,r,cotes);
+
+ analyses++;
+ document.getElementById('analysisCount').textContent=analyses;
+
+ ajouterHistorique('Pronostic : '+a+' vs '+b);
+}
+
+/* ---------- Comparaison simple ---------- */
 
 async function compareTeams(){
 
  const a=document.getElementById('team1').value.trim();
  const b=document.getElementById('team2').value.trim();
-
  const zone=document.getElementById('comparison');
 
  if(!a || !b){
-
   alert('Entrez les deux noms des équipes.');
-
   return;
  }
 
  zone.innerHTML='Chargement des statistiques...';
 
- if(Object.keys(donnees).length===0){
+ const ok=await assurerDonnees();
 
-  const ok=await chargerDonnees();
-
-  if(!ok){
-   zone.textContent='Impossible de charger donnees.json.';
-   return;
-  }
-
+ if(!ok){
+  zone.textContent='Impossible de charger donnees.json.';
+  return;
  }
 
- const matchs=donnees.football || [];
+ const matchs=donnees.football||[];
 
- function analyser(equipe){
-
-  let s={
-   joues:0,
-   victoires:0,
-   nuls:0,
-   defaites:0,
-   butsMarques:0,
-   butsEncaisses:0
-  };
-
-  matchs.forEach(m=>{
-
-   if(m.equipe1===equipe || m.equipe2===equipe){
-
-    s.joues++;
-
-    const marque=m.equipe1===equipe?m.score1:m.score2;
-
-    const encaisse=m.equipe1===equipe?m.score2:m.score1;
-
-    s.butsMarques+=marque;
-    s.butsEncaisses+=encaisse;
-
-    if(marque>encaisse){
-     s.victoires++;
-    }else if(marque===encaisse){
-     s.nuls++;
-    }else{
-     s.defaites++;
-    }
-
-   }
-
-  });
-
-  return s;
- }
-
- function afficher(nom,s){
-
-  return `
-   <h3>${nom}</h3>
-   Matchs joués : ${s.joues}<br>
-   Victoires : ${s.victoires}<br>
-   Nuls : ${s.nuls}<br>
-   Défaites : ${s.defaites}<br>
-   Buts marqués : ${s.butsMarques}<br>
-   Buts encaissés : ${s.butsEncaisses}
-  `;
- }
-
- const x=analyser(a);
- const y=analyser(b);
+ const x=analyserEquipe(matchs,a);
+ const y=analyserEquipe(matchs,b);
 
  comparaisons++;
  analyses++;
 
- document.getElementById('comparisonCount').textContent=comparaisons;
- document.getElementById('analysisCount').textContent=analyses;
-
- zone.innerHTML=
- afficher(a,x)+
- '<hr>'+
- afficher(b,y);
-
- const historique=document.getElementById('historyContent');
-
- historique.innerHTML=
- '<p>'+a+' VS '+b+'</p>'+
- historique.innerHTML;
-
-}
-
-function sendMessage(){
-
- const q=document.getElementById('question').value.trim();
-
- if(!q){
-
-  alert('Écrivez une question.');
-
-  return;
- }
-
- document.getElementById('response').textContent=
- 'Votre question : '+q+
- '. Le moteur IA n’est pas encore connecté.';
-
- analyses++;
-
- document.getElementById('analysisCount').textContent=analyses;
-
- document.getElementById('question').value='';
-
-}
-
-chargerDonnees();
-
-</script>
-
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KIM BOT IA | Sports Analytics</title>
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-
-:root{
- --red:#ff1744;
- --green:#43d99b;
- --background:#08090d;
- --panel:#151721;
- --border:#303442;
- --text:#ffffff;
- --muted:#a4a7b5;
-}
-
-body{background:var(--background);color:var(--text);font-family:Arial,sans-serif;}
-
-.sidebar{
- position:fixed;left:0;top:0;width:235px;height:100vh;
- background:#0d0f16;border-right:1px solid var(--border);
- padding:25px 15px;z-index:10;
-}
-
-.logo{
- color:var(--red);font-size:25px;font-weight:bold;text-align:center;
- margin-bottom:40px;text-shadow:0 0 15px var(--red);
-}
-
-.menu button{
- display:block;width:100%;padding:15px;margin:8px 0;background:transparent;
- color:#aaa;border:none;text-align:left;border-radius:8px;cursor:pointer;font-size:15px;
-}
-
-.menu button:hover,.menu button.active{
- background:#29121a;color:var(--red);box-shadow:0 0 15px #ff174433;
-}
-
-main{margin-left:235px;padding:30px;min-height:100vh;}
-
-.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:35px;}
-.topbar h1{color:var(--red);font-size:25px;}
-.status{color:var(--green);font-size:13px;}
-
-.welcome{margin-bottom:30px;}
-.welcome h2{font-size:29px;margin-bottom:10px;}
-.welcome p{color:var(--muted);}
-
-.cards{display:grid;grid-template-columns:
+ document.getElementById('comparisonCount').t
