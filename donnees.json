@@ -1,0 +1,23 @@
+{
+  "football": [
+    {
+      "equipe1": "Equipe A",
+      "equipe2": "Equipe B",
+      "score1": 2,
+      "score2": 1,
+      "date": "2026-11-10"
+    },
+    {
+      "equipe1": "Equipe A",
+      "equipe2": "Equipe C",
+      "score1": 1,
+      "score2": 1,
+      "date": "2026-11-12"
+    }
+  ],
+  "basketball": [],
+  "tennis": [],
+  "volleyball": [],
+  "hockey": [],
+  "baseball": []
+}
