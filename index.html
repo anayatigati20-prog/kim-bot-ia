@@ -1,374 +1,93 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>KIM BOT IA | Premium</title>
+<title>KIM BOT IA | Sports Analytics</title>
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+ background:#08090d;
+ color:white;
+ font-family:Arial,sans-serif;
 }
 
-body {
-    background: #070707;
-    color: white;
-    font-family: Arial, sans-serif;
+:root{
+ --red:#ff1744;
+ --dark:#11131b;
+ --muted:#9295a3;
 }
 
-:root {
-    --gold: #e5bd50;
-    --dark: #111;
+.sidebar{
+ position:fixed;
+ width:245px;
+ height:100vh;
+ background:#0d0f16;
+ border-right:1px solid #292b36;
+ padding:25px 15px;
 }
 
-.sidebar {
-    position: fixed;
-    width: 250px;
-    height: 100vh;
-    background: #0d0d0d;
-    border-right: 1px solid #71551e;
-    padding: 25px 15px;
+.logo{
+ color:var(--red);
+ font-size:25px;
+ font-weight:bold;
+ text-align:center;
+ margin-bottom:40px;
+ text-shadow:0 0 15px var(--red);
 }
 
-.logo {
-    color: var(--gold);
-    font-size: 25px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 40px;
-    text-shadow: 0 0 15px #b88a2e;
+.menu button{
+ display:block;
+ width:100%;
+ padding:15px;
+ margin:8px 0;
+ background:transparent;
+ color:#aaa;
+ border:none;
+ text-align:left;
+ border-radius:8px;
+ cursor:pointer;
+ font-size:15px;
 }
 
-.menu button {
-    display: block;
-    width: 100%;
-    padding: 15px;
-    margin: 8px 0;
-    background: transparent;
-    color: #aaa;
-    border: none;
-    text-align: left;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 15px;
+.menu button:hover,.menu button.active{
+ background:#29121a;
+ color:var(--red);
+ box-shadow:0 0 15px #ff174433;
 }
 
-.menu button:hover,
-.menu button.active {
-    background: #292111;
-    color: var(--gold);
-    box-shadow: 0 0 12px #a77a1940;
+main{
+ margin-left:245px;
+ padding:30px;
 }
 
-main {
-    margin-left: 250px;
-    padding: 35px;
+.topbar{
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:35px;
 }
 
-.topbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 35px;
+.topbar h1{
+ color:var(--red);
+ font-size:25px;
 }
 
-.topbar h1 {
-    color: var(--gold);
-    font-size: 25px;
+.status{color:#43d99b;font-size:13px}
+
+.welcome{margin-bottom:30px}
+.welcome h2{font-size:29px;margin-bottom:10px}
+.welcome p{color:var(--muted)}
+
+.cards{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:18px;
 }
 
-.status {
-    color: #57d68d;
-    font-size: 13px;
-}
+.card{
+ background:linear-gradient(145deg,#191c27,#101119);
+ border:1px solid #292d3b
 
-.welcome {
-    margin-bottom: 30px;
-}
-
-.welcome h2 {
-    font-size: 28px;
-    margin-bottom: 10px;
-}
-
-.welcome p {
-    color: #999;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.card {
-    background: linear-gradient(145deg,#171717,#0d0d0d);
-    border: 1px solid #8d6b25;
-    border-radius: 14px;
-    padding: 25px;
-    transition: .3s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 0 20px #d4af3740;
-}
-
-.card h3 {
-    color: var(--gold);
-    margin-bottom: 15px;
-}
-
-.card p {
-    color: #aaa;
-    line-height: 1.6;
-}
-
-.section {
-    display: none;
-}
-
-.section.active {
-    display: block;
-}
-
-.action {
-    margin-top: 25px;
-    padding: 14px 20px;
-    border: none;
-    border-radius: 8px;
-    background: linear-gradient(90deg,#a77a19,#f2d36d);
-    color: #111;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.action:hover {
-    box-shadow: 0 0 20px #e5bd50;
-}
-
-input {
-    width: 100%;
-    padding: 14px;
-    margin-top: 15px;
-    background: #1b1b1b;
-    color: white;
-    border: 1px solid #8d6b25;
-    border-radius: 8px;
-}
-
-#response {
-    margin-top: 20px;
-    color: var(--gold);
-}
-
-footer {
-    margin-top: 50px;
-    color: #555;
-    text-align: center;
-}
-
-@media(max-width:800px) {
-    .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        border-right: none;
-        border-bottom: 1px solid #71551e;
-    }
-
-    .logo {
-        margin-bottom: 15px;
-    }
-
-    .menu {
-        display: flex;
-        overflow-x: auto;
-    }
-
-    .menu button {
-        min-width: 110px;
-        text-align: center;
-    }
-
-    main {
-        margin-left: 0;
-        padding: 20px;
-    }
-
-    .cards {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
-</head>
-
-<body>
-
-<aside class="sidebar">
-
-<div class="logo">KIM BOT IA 👑</div>
-
-<div class="menu">
-<button class="active" onclick="showPage('home',this)">🏠 Accueil</button>
-<button onclick="showPage('assistant',this)">🤖 Assistant IA</button>
-<button onclick="showPage('stats',this)">📊 Statistiques</button>
-<button onclick="showPage('history',this)">📜 Historique</button>
-<button onclick="showPage('settings',this)">⚙️ Paramètres</button>
-</div>
-
-</aside>
-
-<main>
-
-<div class="topbar">
-<h1>KIM BOT IA</h1>
-<span class="status">● SYSTÈME EN LIGNE</span>
-</div>
-
-<section id="home" class="section active">
-
-<div class="welcome">
-<h2>Bienvenue dans votre univers intelligent.</h2>
-<p>Votre espace personnel d'analyse statistique.</p>
-</div>
-
-<div class="cards">
-
-<div class="card">
-<h3>🤖 Assistant intelligent</h3>
-<p>Discutez avec votre assistant.</p>
-<button class="action" onclick="showPage('assistant')">Ouvrir</button>
-</div>
-
-<div class="card">
-<h3>📊 Statistiques</h3>
-<p>Consultez vos données et graphiques.</p>
-<button class="action" onclick="showPage('stats')">Consulter</button>
-</div>
-
-<div class="card">
-<h3>📜 Historique</h3>
-<p>Retrouvez vos précédentes consultations.</p>
-<button class="action" onclick="showPage('history')">Voir</button>
-</div>
-
-</div>
-
-</section>
-
-<section id="assistant" class="section">
-
-<h2>🤖 Assistant KIM IA</h2>
-<br>
-<div class="card">
-<p>Bienvenue ! Je suis l'assistant de KIM BOT IA.</p>
-
-<input id="question" placeholder="Écrivez votre message...">
-
-<button class="action" onclick="sendMessage()">Envoyer</button>
-
-<div id="response"></div>
-</div>
-
-</section>
-
-<section id="stats" class="section">
-
-<h2>📊 Centre statistique</h2>
-<br>
-
-<div class="cards">
-
-<div class="card">
-<h3>Données analysées</h3>
-<p>En attente de données vérifiées.</p>
-</div>
-
-<div class="card">
-<h3>Historique disponible</h3>
-<p>0 enregistrement.</p>
-</div>
-
-<div class="card">
-<h3>Fiabilité</h3>
-<p>Aucune mesure validée pour le moment.</p>
-</div>
-
-</div>
-
-</section>
-
-<section id="history" class="section">
-
-<h2>📜 Historique</h2>
-<br>
-
-<div class="card">
-<p id="historyContent">Aucune consultation enregistrée.</p>
-</div>
-
-</section>
-
-<section id="settings" class="section">
-
-<h2>⚙️ Paramètres</h2>
-<br>
-
-<div class="card">
-<h3>Version de l'application</h3>
-<p>KIM BOT IA PREMIUM — Version 2.0</p>
-</div>
-
-</section>
-
-<footer>
-KIM BOT IA © 2026 — TECHNOLOGIE & INTELLIGENCE
-</footer>
-
-</main>
-
-<script>
-
-function showPage(page,button) {
-
-document.querySelectorAll('.section').forEach(s=>{
-s.classList.remove('active');
-});
-
-document.getElementById(page).classList.add('active');
-
-document.querySelectorAll('.menu button').forEach(b=>{
-b.classList.remove('active');
-});
-
-if(button) button.classList.add('active');
-
-}
-
-function sendMessage() {
-
-let question = document.getElementById('question').value;
-
-if(question.trim()==='') {
-alert('Écrivez un message.');
-return;
-}
-
-document.getElementById('response').innerHTML =
-"Message reçu : "+question+
-"<br><br>Je suis une interface de démonstration. Mon moteur IA n'est pas encore connecté.";
-
-document.getElementById('historyContent').innerHTML =
-question;
-
-document.getElementById('question').value='';
-
-}
-
-</script>
-
-</body>
-</html>
