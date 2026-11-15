@@ -613,7 +613,47 @@ async function assurerDonnees(){
 
 /* ---------- Statistiques d'une équipe ---------- */
 
-function analyserEquipe(matchs,equipe){
+function analyserEquipe(matchs, equipe) {
+    const nom = norm(equipe);
+
+    const stats = {
+        joues: 0,
+        victoires: 0,
+        nuls: 0,
+        defaites: 0,
+        pointsMarques: 0,
+        pointsEncaisses: 0
+    };
+
+    matchs.forEach(match => {
+        const e1 = norm(match.equipe1);
+        const e2 = norm(match.equipe2);
+
+        if (e1 !== nom && e2 !== nom) return;
+
+        stats.joues++;
+
+        const score1 = Number(match.score1);
+        const score2 = Number(match.score2);
+
+        if (e1 === nom) {
+            stats.pointsMarques += score1;
+            stats.pointsEncaisses += score2;
+        } else {
+            stats.pointsMarques += score2;
+            stats.pointsEncaisses += score1;
+        }
+
+        const butsEquipe = e1 === nom ? score1 : score2;
+        const butsAdverse = e1 === nom ? score2 : score1;
+
+        if (butsEquipe > butsAdverse) stats.victoires++;
+        else if (butsEquipe === butsAdverse) stats.nuls++;
+        else stats.defaites++;
+    });
+
+    return stats;
+}
 
  const cible=norm(equipe);
 
